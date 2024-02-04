@@ -50,7 +50,6 @@ __global__ void panel_simulation(const parameters p, grids Grids, prices prices)
 
 	int index_a;
 	int index_z;
-	int index_x;
 
 	int linear_index;
 

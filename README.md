@@ -1,3 +1,11 @@
 # Aiyagari (1994) Model with CUDA 
 
 This repository contains a sample code for computing the Aiyagari (1994) model using CUDA. 
+
+# Requirements:
+
+* CUDA-compatible GPU
+* CUDA toolkit
+* Visual Studio 2019 or 2022
+* Nvidia Graphics Drivers
+

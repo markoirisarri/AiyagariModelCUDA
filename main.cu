@@ -452,7 +452,7 @@ void main() {
 
 	
 	/*-------------------------------------
-		This section solve for the SS GE 
+		This section solves for the SS GE 
 	--------------------------------------*/
 
 	// Discretize AR(1) process for idiosyncratic productivity following Tauchen (1986)
@@ -486,6 +486,19 @@ void main() {
 
 	auto start = std::chrono::steady_clock::now();
 
+	// Print model parameterization
+
+	std::cout << " Solving the Aiyagari (1994) model with the following parameterizaton: " << "\n" <<
+		"\n" << "			Assets dimension: " << *p.dima <<
+		"\n" << "			Productivity shock dimension: " << *p.dimz <<
+		"\n" << "			Beta: " << *p.beta <<
+		"\n" << "			Sigma: " << *p.sigma_hh <<
+		"\n" << "			Alpha: " << *p.alpha_c <<
+		"\n" << "			Delta " << *p.delta <<
+		"\n" << "			Persistence shocks " << rho_z <<
+		"\n" << "			Std. shocks: " << sigma_z <<
+		"\n";
+
 	update_r(p, Grids, p_prices,KernelArgs);
 	
 	auto end = std::chrono::steady_clock::now();
@@ -493,6 +506,67 @@ void main() {
 	std::chrono::duration<float> elapsed_seconds = end - start;
 	std::cout << "\n Model Computed in: " << elapsed_seconds.count() << " seconds. \n";
 
-	
+	// Free allocated memory
+
+	cudaFree(agrid);
+	cudaFree(zgrid);
+	cudaFree(Pi_z);
+	cudaFree(Pi_z_ergodic);
+	cudaFree(aux_vector);
+	cudaFree(amat_vec);
+	cudaFree(zmat_vec);
+	cudaFree(zmat_vec_exp);
+	cudaFree(cum_sum_pi_z);
+	cudaFree(beta);
+	cudaFree(sigma_hh);
+	cudaFree(delta);
+	cudaFree(alpha_c);
+	cudaFree(iter_r);
+	cudaFree(relaxation);
+	cudaFree(number_people);
+	cudaFree(number_periods);
+	cudaFree(burn_in);
+	cudaFree(dima_cuda);
+	cudaFree(dimz_cuda);
+	cudaFree(dim_total_cuda);
+	cudaFree(min_a_cuda);
+	cudaFree(min_z_cuda);
+	cudaFree(dx_a_cuda);
+	cudaFree(dx_z_cuda);
+	cudaFree(dx_a_efficient_cuda);
+	cudaFree(dx_z_efficient_cuda);
+	cudaFree(outer_iter);
+	cudaFree(r);
+	cudaFree(R);
+	cudaFree(w);
+	cudaFree(value);
+	cudaFree(policy);
+	cudaFree(check_policy);
+	cudaFree(ev);
+	cudaFree(limit);
+	cudaFree(states);
+	cudaFree(random_numbers);
+	cudaFree(random_draws_z);
+	cudaFree(assets_simulation);
+	cudaFree(labour_supply_simulation);
+	cudaFree(consumption);
+	cudaFree(consumption_simulation);
+	cudaFree(income_labour);
+	cudaFree(income_capital);
+	cudaFree(income_simulation_labour);
+	cudaFree(income_simulation_capital);
+	cudaFree(total_assets);
+	cudaFree(total_consumption_simulation);
+	cudaFree(total_income_simulation_capital);
+	cudaFree(total_income_simulation_labour);
+	cudaFree(SWF);
+	cudaFree(moment_zero_wealth);
+	cudaFree(total_labour_supply);
+	cudaFree(SWF_value_function_simulation);
+	cudaFree(gini_coefficient);
+	cudaFree(indicator_zero_wealth);
+	cudaFree(aux_vector_sums);
+
+
 }
 

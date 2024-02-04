@@ -4,7 +4,7 @@ This repository contains a sample code for computing the Aiyagari (1994) model u
 
 # Model Output
 
-<img: src = https://github.com/markoirisarri/AiyagariModelCUDA/blob/master/modelOutput.PNG width = 700>
+<img src = https://github.com/markoirisarri/AiyagariModelCUDA/blob/master/modelOutput.PNG width = 700>
 
 # Requirements:
 

@@ -1,4 +1,4 @@
-# Aiyagari (1994) Model with CUDA 
+# Aiyagari (1994) Model with CUDA (readme in working progress)
 
 This repository contains a sample code for computing the Aiyagari (1994) model using CUDA. 
 

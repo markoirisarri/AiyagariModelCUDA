@@ -57,7 +57,7 @@ void tauchen(const int dim, const float mean, const float rho, const float sigma
 	float* brackets_mat;
 	cudaMallocManaged(&brackets_mat, dim * (dim + 1) * sizeof(float));
 
-	const int bandwith = 3;
+	const int bandwidth = 3;
 
 	// Obtain volatility of the AR1 process
 
@@ -65,8 +65,8 @@ void tauchen(const int dim, const float mean, const float rho, const float sigma
 
 	// Create the grid for the process
 
-	const float min = mean - bandwith * sigma_productivity;
-	const float max = mean + bandwith * sigma_productivity;
+	const float min = mean - bandwidth * sigma_productivity;
+	const float max = mean + bandwidth * sigma_productivity;
 	const float dx_z = (max - min) / (dim - 1);
 
 

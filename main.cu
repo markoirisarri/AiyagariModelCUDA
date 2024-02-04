@@ -419,9 +419,9 @@ void main() {
 
 	void* KernelArgs[] = {
 
-   (void*)&p,
-   (void*)&Grids,
-   (void*)&p_prices,
+		(void*)&p,
+		(void*)&Grids,
+		(void*)&p_prices,
 
 	};
 

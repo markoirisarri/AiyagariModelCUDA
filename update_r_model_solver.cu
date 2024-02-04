@@ -112,7 +112,7 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 	// this specifies the range of values for which the summation should be done 
 
 	int reduction_start_index = (*p.number_periods - *p.burn_in) * *p.number_people;
-	int reduction_end_index = (*p.number_periods) * *p.number_people;
+	int reduction_end_index = (*p.number_periods - 1) * *p.number_people;
 	
 	// this is a boolean indicating whether the user wants to check the error in the 
 	// VFI's policy function

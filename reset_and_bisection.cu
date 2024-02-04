@@ -28,7 +28,7 @@ __global__ void reset_burnin(parameters p, grids Grids, prices prices) {
 
 	// This resets all values in the burn-in period to 0 so that the reduction kernel can operate appropiately
 
-	for (int i = blockDim.x * blockIdx.x + threadIdx.x; i < *p.number_people * 1500 ; i += gridDim.x * blockDim.x) {
+	for (int i = blockDim.x * blockIdx.x + threadIdx.x; i < *p.number_people * (*p.number_periods - *p.burn_in) ; i += gridDim.x * blockDim.x) {
 
 		Grids.ptr_random_draws_z[i] = zero;
 		Grids.ptr_assets_simulation[i] = zero;

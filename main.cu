@@ -482,8 +482,8 @@ void main() {
 		"\n" << "			Beta: " << *p.beta <<
 		"\n" << "			Sigma: " << *p.sigma_hh <<
 		"\n" << "			Alpha: " << *p.alpha_c <<
-		"\n" << "			Delta " << *p.delta <<
-		"\n" << "			Persistence shocks " << rho_z <<
+		"\n" << "			Delta: " << *p.delta <<
+		"\n" << "			Persistence shocks: " << rho_z <<
 		"\n" << "			Std. shocks: " << sigma_z <<
 		"\n";
 

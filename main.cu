@@ -186,15 +186,6 @@ void main() {
 	dx_a_cuda[0] = agrid[1] - agrid[0];
 	dx_z_cuda[0] = zgrid[1] - zgrid[0];
 
-	float* dx_a_efficient_cuda;
-	float* dx_z_efficient_cuda;
-
-	cudaMallocManaged(&dx_a_efficient_cuda, sizeof(float));
-	cudaMallocManaged(&dx_z_efficient_cuda, sizeof(float));
-
-	dx_a_efficient_cuda[0] = 1 / (agrid[1] - agrid[0]);
-	dx_z_efficient_cuda[0] = 1 / (zgrid[1] - zgrid[0]);
-
 	p.dima = dima_cuda;
 	p.dimz = dimz_cuda;
 	p.dim_total = dim_total_cuda;
@@ -204,9 +195,6 @@ void main() {
 
 	p.dx_a = dx_a_cuda;
 	p.dx_z = dx_a_cuda;
-
-	p.dx_a_efficient = dx_a_efficient_cuda;
-	p.dx_z_efficient = dx_z_efficient_cuda;
 
 	/* Convergence criteria parameters */
 
@@ -533,8 +521,6 @@ void main() {
 	cudaFree(min_z_cuda);
 	cudaFree(dx_a_cuda);
 	cudaFree(dx_z_cuda);
-	cudaFree(dx_a_efficient_cuda);
-	cudaFree(dx_z_efficient_cuda);
 	cudaFree(outer_iter);
 	cudaFree(r);
 	cudaFree(R);

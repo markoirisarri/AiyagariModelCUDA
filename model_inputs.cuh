@@ -49,9 +49,6 @@ struct parameters {
 	float* dx_a; // step size assets
 	float* dx_z; // step size idiosyncratic productivity 
 
-	float* dx_a_efficient; // precomputation required for interpolation
-	float* dx_z_efficient;
-
 	// GE iterations
 
 	int* outer_iter; // GE iterations on prices

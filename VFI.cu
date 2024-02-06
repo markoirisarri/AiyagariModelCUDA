@@ -17,7 +17,7 @@
 
 namespace cg = cooperative_groups;
 
-__global__ void VFI_optimized(const parameters p, grids Grids, prices prices) {
+__global__ void VFI(const parameters p, grids Grids, prices prices) {
 
 	/*----------------------------------------------------------------------
 	
@@ -62,7 +62,7 @@ __global__ void VFI_optimized(const parameters p, grids Grids, prices prices) {
 	// Convergence 
 
 	float iter = 0;
-	float tol = 1e-7f;
+	float tol = 1e-5f;
 
 	// Linear indexes
 
@@ -139,7 +139,7 @@ __global__ void VFI_optimized(const parameters p, grids Grids, prices prices) {
 				float x1_old = 1;
 				float f1_old = 1;
 				float f2_old = 2;
-				float dx_a = 1 / (Grids.ptr_agrid[2] - Grids.ptr_agrid[1]);
+				float dx_a = 1.0f / (Grids.ptr_agrid[2] - Grids.ptr_agrid[1]);
 				float sigma = *p.sigma_hh;
 				float beta = *p.beta;
 				float min_a = (*p.min_a);
@@ -386,7 +386,7 @@ __global__ void VFI_optimized(const parameters p, grids Grids, prices prices) {
 
 		int dima = *p.dima;
 		int dimz = *p.dimz;
-		float dx_a = 1 / (Grids.ptr_agrid[2] - Grids.ptr_agrid[1]);
+		float dx_a = 1.0f / (Grids.ptr_agrid[2] - Grids.ptr_agrid[1]);
 		float sigma = *p.sigma_hh;
 		float beta = *p.beta;
 		float min_a = *p.min_a;

@@ -13,11 +13,11 @@
   <ItemGroup>
     <CudaCompile Include="aggregation.cu" />
     <CudaCompile Include="calibration_functions.cu" />
-    <CudaCompile Include="cpu_func.cu" />
+    <CudaCompile Include="cpu_general_functions.cu" />
     <CudaCompile Include="main.cu" />
     <CudaCompile Include="panel_simulation.cu" />
     <CudaCompile Include="random_gpu_generator.cu" />
-    <CudaCompile Include="reset_and_bisection.cu" />
+    <CudaCompile Include="reset.cu" />
     <CudaCompile Include="update_r_model_solver.cu" />
     <CudaCompile Include="VFI.cu" />
   </ItemGroup>

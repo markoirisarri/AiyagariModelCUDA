@@ -21,7 +21,7 @@
 
 __global__ void generate_random_gpu(parameters p, grids Grids, prices p_prices); // generates random numbers on GPU
 
-__global__ void VFI_optimized(parameters p, grids Grids, prices prices); // performs the VFI of the Aiyagari model
+__global__ void VFI(parameters p, grids Grids, prices prices); // performs the VFI of the Aiyagari model
 
 __global__ void panel_simulation(const parameters p, grids Grids, prices prices); // simulates the panel once the policy functions are obtained
 

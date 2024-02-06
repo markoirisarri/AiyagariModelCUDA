@@ -100,7 +100,7 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 	dim3 dimGrid3_reset(BLOCKS3_aux, 1, 1);
 
 	// vfi kernel
-	cudaOccupancyMaxPotentialBlockSize(&BLOCKS3_aux, &THREADS3_aux, VFI_optimized, 0, 0);
+	cudaOccupancyMaxPotentialBlockSize(&BLOCKS3_aux, &THREADS3_aux, VFI, 0, 0);
 	dim3 dimBlock3_vfi(THREADS3_aux, 1, 1);
 	dim3 dimGrid3_vfi(BLOCKS3_aux, 1, 1);
 
@@ -132,7 +132,7 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 
 	// perform the VFI with Howard Improvement, in order to obtain the Value and Policy functions
 
-	cudaLaunchCooperativeKernel((void*)VFI_optimized, dimGrid3_vfi, dimBlock3_vfi, KernelArgs);
+	cudaLaunchCooperativeKernel((void*)VFI, dimGrid3_vfi, dimBlock3_vfi, KernelArgs);
 	CHECK(cudaDeviceSynchronize());
 
 	// check the error in the policies if desired

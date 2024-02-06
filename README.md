@@ -12,7 +12,7 @@ The inherent parallel nature of many algorithms (such as Value Function Iteratio
 
 To provide a reference on the expected speed-ups with CUDA compared to a standard vectorized implementation in MATLAB (code can also be found on this repository), the figure below provides data on the execution time for 100 calls of the VFI algorithm in each language (the MATLAB implementation was set to the same conditions and parameterization). The comparison against MATLAB was made as it is the most widely used language in Economics.
 
-<img src = https://github.com/markoirisarri/AiyagariModelCUDA/blob/master/matlab_cuda_execution_times.png width = 700>
+<img src = https://github.com/markoirisarri/AiyagariModelCUDA/blob/master/Figures/matlab_cuda_execution_times.png width = 700>
 
 #### Observations
 
@@ -25,12 +25,13 @@ In summary, CUDA provides a great opportunity to exploit the inherent parallel n
 
 This is the obtained output on a RTX 3070 GPU:
 
-<img src = https://github.com/markoirisarri/AiyagariModelCUDA/blob/master/modelOutput.PNG width = 700>
+<img src = https://github.com/markoirisarri/AiyagariModelCUDA/blob/master/Figures/modelOutput.PNG width = 700>
 
 ## Structure
 
 The structure of the code is as follows:
 
+CUDA Folder:
 * Main.cu: main file, it allocates CPU-GPU accessible memory for the model input structures and calls update_r(), which evaluates the Aiyagari model for a given guess on the interest rate.
   * model_inputs.cuh: header file containing the declaration of the three model input structures (parameters, Grids and prices).
   * cpu_functions.cuh: header file containing the declaration of the functions that run on the CPU (these are small dimensional or sequential in nature).
@@ -44,6 +45,7 @@ The structure of the code is as follows:
     * random_gpu_generator.cu: source file containing the definiton of a function that calls curand_uniform() to generate random numbers to obtain the realizations of the idiosyncratic shocks.
     * panel_simulation.cu: source file containing the definition of the function that performs the panel simulation of the Aiyagari model. The simulation is sequential in the time dimension and parallel in the agents dimension.
 
+MATLAB Folder:
 * Main_VFI.m, tauchen_method_1986.m and golden_section_search.m are the files to run the model counterpart in MATLAB
   
 ## Requirements:

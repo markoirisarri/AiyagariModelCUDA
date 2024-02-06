@@ -119,7 +119,7 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 
 	bool check_vfi_error = false;
 	bool naive_benchmark_vfi = false;
-	int benchmark_iterations = 10;
+	int benchmark_iterations = 100;
 
 	// these are locals for aggregate labour, aggregate capital and aggregate output
 
@@ -136,8 +136,8 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 
 	if (naive_benchmark_vfi == false) {
 
-	cudaLaunchCooperativeKernel((void*)VFI, dimGrid3_vfi, dimBlock3_vfi, KernelArgs);
-	CHECK(cudaDeviceSynchronize());
+		cudaLaunchCooperativeKernel((void*)VFI, dimGrid3_vfi, dimBlock3_vfi, KernelArgs);
+		CHECK(cudaDeviceSynchronize());
 
 	}
 	else {

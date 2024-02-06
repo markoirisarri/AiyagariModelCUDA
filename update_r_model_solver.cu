@@ -118,6 +118,8 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 	// VFI's policy function
 
 	bool check_vfi_error = false;
+	bool naive_benchmark_vfi = false;
+	int benchmark_iterations = 10;
 
 	// these are locals for aggregate labour, aggregate capital and aggregate output
 
@@ -132,8 +134,45 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 
 	// perform the VFI with Howard Improvement, in order to obtain the Value and Policy functions
 
+	if (naive_benchmark_vfi == false) {
+
 	cudaLaunchCooperativeKernel((void*)VFI, dimGrid3_vfi, dimBlock3_vfi, KernelArgs);
 	CHECK(cudaDeviceSynchronize());
+
+	}
+	else {
+
+		// set same prices as in Matlab Code 
+
+		*prices.r = 0.02;
+		*prices.w = 2;
+
+		auto start = std::chrono::steady_clock::now();
+
+		for (int i = 0; i < benchmark_iterations; i++) {
+
+
+			// Here please note we are being conservative on the speed-up 
+			// since we are synchronizing CPU-GPU memory at every call of
+			// VFI with cudaDeviceSynchronize()
+
+			// For more rigurous profiling and being able to identify bottlenecks in the kernel one can use Nsight Compute
+
+			cudaLaunchCooperativeKernel((void*)VFI, dimGrid3_vfi, dimBlock3_vfi, KernelArgs);
+			CHECK(cudaDeviceSynchronize());
+
+		}
+
+		auto end = std::chrono::steady_clock::now();
+
+		std::chrono::duration<float> elapsed_seconds = end - start;
+		std::cout << "\n Elapsed time for " << benchmark_iterations << " calls to VFI: " << elapsed_seconds.count() << " seconds. \n";
+
+		std::cout << "\n \n Naive Benchmark completed, terminating execution"; 
+
+		exit(0);
+
+	}
 
 	// check the error in the policies if desired
 

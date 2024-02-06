@@ -38,6 +38,7 @@ The structure of the code is as follows:
 * CUDA toolkit
   * Can be downloaded from: [link](https://developer.nvidia.com/cuda-toolkit)
 * Visual Studio 2019 or 2022
+  * Please make sure to specify the correct compute capability of your GPU in project settings > CUDA C/C++ > Device > Code Generation > compute_xx, sm_xx It is set to compute_86, sm_86 for a RTX 3070 (or any RTX 3000 family card)
 * Nvidia Graphics Drivers
   * Will be often installed or updated as part of the CUDA toolkit
 

@@ -1,4 +1,4 @@
-# Aiyagari (1994) Model with CUDA 
+# Aiyagari (1994) Model with CUDA (GPU)
 
 ## Description
 

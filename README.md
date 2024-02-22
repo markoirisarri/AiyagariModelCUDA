@@ -12,7 +12,7 @@ The inherent parallel nature of many algorithms (such as Value Function Iteratio
 
 To provide a reference on the expected speed-ups with CUDA compared to a standard vectorized implementation in MATLAB (code can also be found on this repository), the figure below provides data on the execution time for 100 calls of the VFI algorithm in each language (the MATLAB implementation was set to the same conditions and parameterization). The comparison against MATLAB was made as it is the most widely used language in Economics.
 <p align="center">
-     <img src = https://github.com/markoirisarri/AiyagariModelCUDA/blob/master/Figures/matlab_cuda_execution_times.png width = "2000" >
+     <img src = https://github.com/markoirisarri/AiyagariModelCUDA/blob/master/Figures/matlab_cuda_execution_times.png  style="max-width: 100%; height: auto;" >
 </p>
 
 #### Observations

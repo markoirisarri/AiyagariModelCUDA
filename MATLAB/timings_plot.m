@@ -24,6 +24,7 @@ ax = gca;
 ax.XAxis.TickLabelInterpreter = 'latex';
 ax.XAxis.FontSize = 20;
 
+
 ylabel('Seconds (1-2) / Speed-up (3) (log scale)', 'Interpreter', 'latex', 'FontSize', 20);
 title('CUDA (12.3) and MATLAB (2021b) Execution Time Comparison (VFI)', 'Interpreter', 'latex', 'FontSize', 22);
 subtitle('Total Execution Time for 100 runs (10 runs when 100,000)', 'Interpreter', 'latex', 'FontSize', 20)

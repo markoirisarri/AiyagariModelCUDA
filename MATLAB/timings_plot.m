@@ -19,6 +19,11 @@ set(gca, 'YScale', 'log');  % Set logarithmic scale on the y-axis
 
 % Labeling and title
 xlabel('Assets Dimension', 'Interpreter', 'latex', 'FontSize', 20);
+
+ax = gca;
+ax.XAxis.TickLabelInterpreter = 'latex';
+ax.XAxis.FontSize = 20;
+
 ylabel('Seconds (1-2) / Speed-up (3) (log scale)', 'Interpreter', 'latex', 'FontSize', 20);
 title('CUDA (12.3) and MATLAB (2021b) Execution Time Comparison (VFI)', 'Interpreter', 'latex', 'FontSize', 22);
 subtitle('Total Execution Time for 100 runs (10 runs when 100,000)', 'Interpreter', 'latex', 'FontSize', 20)
@@ -35,6 +40,6 @@ for i = 1:numel(b)
     if i <= 2
         text(xval, yval, strcat(num2str(yval', '%.1f'), 's'), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center', 'FontSize', 14);
     else
-        text(xval, yval, strcat('x', num2str(yval', '%.1f')), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center', 'FontSize', 14);
+        text(xval, yval + 0.05*yval, strcat(num2str(yval', '%.1f'), 'x'), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center', 'FontSize', 14);
     end
 end

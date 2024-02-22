@@ -39,8 +39,8 @@ for i = 1:numel(b)
     yval = b(i).YData;
     xval = b(i).XEndPoints;
     if i <= 2
-        text(xval, yval, strcat(num2str(yval', '%.1f'), 's'), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center', 'FontSize', 14);
+        text(xval, yval, strcat(num2str(yval', '%.1f'), 's'), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center', 'FontSize', 12);
     else
-        text(xval, yval + 0.05*yval, strcat(num2str(yval', '%.1f'), 'x'), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center', 'FontSize', 14);
+        text(xval, yval + 0.05*yval, strcat(num2str(yval', '%.1f'), 'x'), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'center', 'FontSize', 12);
     end
 end

@@ -487,8 +487,9 @@ void main() {
 		"\n" << "			Std. shocks: " << sigma_z <<
 		"\n";
 
+
 	update_r(p, Grids, p_prices,KernelArgs);
-	
+
 	auto end = std::chrono::steady_clock::now();
 
 	std::chrono::duration<float> elapsed_seconds = end - start;

@@ -20,7 +20,7 @@ To provide a reference on the expected speed-ups with CUDA compared to a standar
 * For small dimensions (dima = 100, dimz = 7) both implementations attain the solution in little time. At this point the GPU is not under full utilization.
 * As the dimensionality increases, the performance gap between both implementations widens. In particular, once we reach full utilization of the GPU (dima = 10.000) we observe a relative speed-up of around x1750, with the CUDA implementation taking less than one second to perform 100 calls to the VFI while MATLAB's sequential implementation requires about 25 minutes.
 
-In summary, CUDA provides a great opportunity to exploit the inherent parallel nature of the most common algorithms to solve DSGE models (VFI, PFI, EGM, ...). The obtained speed-ups can be particularly beneficial when performing tasks that require multiple evaluations of the model, such as calibration and optimal policy analysis. 
+In summary, CUDA provides a great opportunity to exploit the inherent parallel nature of the most common algorithms to solve DSGE models (VFI, PFI, EGM, ...). The obtained speed-ups can be particularly beneficial when performing tasks that require multiple evaluations of the model, such as calibration and optimal policy analysis. Any feedback is appreciated!
 
 ## Model Output
 
@@ -58,7 +58,13 @@ MATLAB Folder:
 * CUDA toolkit
   * Can be downloaded from: [link](https://developer.nvidia.com/cuda-toolkit)
 * Visual Studio 2019 or 2022
-  * Please make sure to specify the correct compute capability of your GPU in project settings > CUDA C/C++ > Device > Code Generation > compute_xx, sm_xx It is set to compute_86, sm_86 for a RTX 3070 (or any RTX 3000 family card)
+  * Please make sure to specify the correct compute capability of your GPU in project settings > CUDA C/C++ > Device > Code Generation > compute_xx, sm_xx. It is set to compute_86, sm_86 for a RTX 3070 (or any RTX 3000 family card)
+  * Please make sure that the build target is set to your CUDA Toolkit version. By default, it is set to CUDA Toolkit version 12.3. It can be changed in project settings > CUDA C/C++ > CUDA Toolkit Custom Dir and specifying the path to your CUDA Toolkit. (By default it should be at "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\vxx.x")
 * Nvidia Graphics Drivers
   * Will be often installed or updated as part of the CUDA toolkit
 
+## Useful References
+
+* CUDA Best Practices [link](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html)
+* CUDA Documentation [link](https://docs.nvidia.com/cuda/)
+* CUDA Sample Codes [link](https://github.com/NVIDIA/cuda-samples)

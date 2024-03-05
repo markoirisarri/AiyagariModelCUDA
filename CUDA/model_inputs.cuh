@@ -57,6 +57,10 @@ struct parameters {
 
 	int* burn_in;
 
+	// tolerance convergence prices
+
+	float* tol_r;
+
 };
 
 struct grids { 

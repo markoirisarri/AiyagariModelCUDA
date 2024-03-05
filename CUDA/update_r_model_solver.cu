@@ -44,10 +44,10 @@ void update_r(parameters p, grids Grids, prices p_prices, void* KernelArgs[]) {
 	--------------------------------------------------------------------*/
 
 	float diff = 1;
-	int	iter = 0;
 	float r_old = 1;
+	int	iter = 0;
 
-		while ((abs(diff) > (0.00001) && iter < 30)) {
+		while ((abs(diff) > *p.tol_r && iter < 30)) {
 
 			r_old = *p_prices.r;
 
@@ -119,7 +119,7 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 
 	bool check_vfi_error = false;
 	bool naive_benchmark_vfi = false;
-	int benchmark_iterations = 100;
+	int benchmark_iterations = 100; // set naive benchmark to true to obtain the results in the speed-ups figure
 
 	// these are locals for aggregate labour, aggregate capital and aggregate output
 
@@ -179,14 +179,15 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 	if (check_vfi_error == true) {
 
 		float sum_error = 0;
+		float max_error = 0;
 
 		for (int i = 0; i < *p.dim_total; i++) {
 
-			sum_error += abs(Grids.ptr_policy[i] - Grids.ptr_check_policy[i]);
-
+			sum_error += fabsf(Grids.ptr_policy[i] - Grids.ptr_check_policy[i]);
+			max_error = fmaxf(max_error, fabsf(Grids.ptr_policy[i] - Grids.ptr_check_policy[i]));
 		}
 
-		std::cout << "\n Total Error in VFI: " << sum_error << "\n";
+		std::cout << "\n Total Error in VFI: " << sum_error << " Max Abs. Error Policies" << max_error << "\n";
 
 	}
 
@@ -202,26 +203,29 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 
 	// perform reduction on the obtained series for the variables of interest 
 
+	cudaOccupancyMaxPotentialBlockSize(&BLOCKS3, &THREADS3, reduction_kernel, THREADS3*sizeof(float), 0);
+	CHECK(cudaDeviceSynchronize());
+
 	// Assets
-	reduction_kernel << <46,512,512*sizeof(float) >> > (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_assets_simulation, Grids.ptr_total_assets);
+	reduction_kernel <<<BLOCKS3,THREADS3,THREADS3*sizeof(float)>>> (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_assets_simulation, Grids.ptr_total_assets);
 	cudaDeviceSynchronize();
 	// Consumption
-	reduction_kernel << <46,512,512*sizeof(float) >> > (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_consumption_simulation, Grids.ptr_total_consumption_simulation);
+	reduction_kernel <<<BLOCKS3,THREADS3,THREADS3*sizeof(float)>>> (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_consumption_simulation, Grids.ptr_total_consumption_simulation);
 	cudaDeviceSynchronize();
 	// Labour Income
-	reduction_kernel << <46,512,512*sizeof(float) >> > (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_income_simulation_labour, Grids.ptr_total_income_simulation_labour);
+	reduction_kernel <<<BLOCKS3,THREADS3,THREADS3*sizeof(float)>>> (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_income_simulation_labour, Grids.ptr_total_income_simulation_labour);
 	cudaDeviceSynchronize();
 	// Capital Income
-	reduction_kernel << <46,512,512*sizeof(float) >> > (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_income_simulation_capital, Grids.ptr_total_income_simulation_capital);
+	reduction_kernel <<<BLOCKS3,THREADS3,THREADS3*sizeof(float)>>> (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_income_simulation_capital, Grids.ptr_total_income_simulation_capital);
 	cudaDeviceSynchronize();
 	// Moment Zero Wealth
-	reduction_kernel << <46,512,512*sizeof(float) >> > (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_indicator_zero_wealth, Grids.ptr_moment_zero_wealth);
+	reduction_kernel <<<BLOCKS3,THREADS3,THREADS3*sizeof(float)>>> (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_indicator_zero_wealth, Grids.ptr_moment_zero_wealth);
 	cudaDeviceSynchronize();
 	// SWf
-	reduction_kernel << <46,512,512*sizeof(float) >> > (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_SWF_value_function_simulation, Grids.ptr_SWF);
+	reduction_kernel <<<BLOCKS3,THREADS3,THREADS3*sizeof(float)>>> (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_SWF_value_function_simulation, Grids.ptr_SWF);
 	cudaDeviceSynchronize();
 	// Labour Supply
-	reduction_kernel << <46, 512, 512 * sizeof(float) >> > (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_labour_supply_simulation, Grids.ptr_total_labour_supply);
+	reduction_kernel <<<BLOCKS3,THREADS3,THREADS3*sizeof(float)>>> (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_labour_supply_simulation, Grids.ptr_total_labour_supply);
 	cudaDeviceSynchronize();
 
 	// compute the aggregates from the obtained cumulative sums across periods and agents 
@@ -243,7 +247,7 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 	// compute the Gini coefficient
 
 	compute_gini(p, Grids, prices);
-	cudaDeviceSynchronize();
+	CHECK(cudaDeviceSynchronize());
 
 	// update the interest rate 
 

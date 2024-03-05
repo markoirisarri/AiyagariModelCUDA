@@ -199,10 +199,13 @@ void main() {
 	/* Convergence criteria parameters */
 
 	int* outer_iter;
+	float* tol_r;
 
 	cudaMallocManaged(&outer_iter, sizeof(int));
+	cudaMallocManaged(&tol_r, sizeof(float));
 
 	p.outer_iter = outer_iter;
+	p.tol_r = tol_r;
 
 	/*--- Set up the prices structure  ---*/ 
 
@@ -469,6 +472,7 @@ void main() {
 	// specify initial guess for the interest rate
 
 	*p_prices.r = 0.0;
+	*p.tol_r = 1e-4f;
 
 	// call the function evaluating the model for a given guess on the interest rate
 

@@ -35,10 +35,8 @@ __global__ void reset_burnin(parameters p, grids Grids, prices prices) {
 		Grids.ptr_income_simulation_capital[i] = zero;
 		Grids.ptr_income_simulation_labour[i] = zero;
 		Grids.ptr_consumption_simulation[i] = zero;
-		Grids.ptr_SWF[i] = zero;
 		Grids.ptr_SWF_value_function_simulation[i] = zero;
 		Grids.ptr_indicator_zero_wealth[i] = zero;
-		Grids.ptr_random_draws_z[i] = zero;
 		Grids.ptr_labour_supply_simulation[i] = zero;
 
 	}
@@ -71,10 +69,8 @@ __global__ void reset(parameters p, grids Grids, prices prices) {
 		Grids.ptr_income_simulation_capital[i] = zero;
 		Grids.ptr_income_simulation_labour[i] = zero;
 		Grids.ptr_consumption_simulation[i] = zero;
-		Grids.ptr_SWF[i] = zero;
 		Grids.ptr_SWF_value_function_simulation[i] = zero;
 		Grids.ptr_indicator_zero_wealth[i] = zero;
-		Grids.ptr_random_draws_z[i] = zero;
 		Grids.ptr_labour_supply_simulation[i] = zero;
 
 	}

@@ -1,6 +1,8 @@
 ﻿// C++ headers
 
 #include <iostream>
+#include <cassert>
+#include <cstdlib>
 
 // Project headers
 
@@ -15,7 +17,7 @@ void compute_gini(parameters p, grids Grids, prices prices) {
 	int h = 0;
 	for (int i = 0; i < 10000; i++) {
 
-		h = i + (*p.number_periods - 500.0f) * *p.number_people;
+		h = i + (*p.number_periods - *p.burn_in) * *p.number_people;
 		assets_temp[i] = Grids.ptr_assets_simulation[h];
 
 	}
@@ -36,11 +38,11 @@ void compute_gini(parameters p, grids Grids, prices prices) {
 
 	// check whether we should increase the maximum value for assets on the grid
 
-	if (assets_temp[9800] >= expf(Grids.ptr_agrid[*p.dima - 1]) - 0.1f) {
+	if (assets_temp[9800] >= Grids.ptr_agrid[*p.dima - 1] - 0.01f) {
 
-		for (int i = 0; i < 5; i++) {
-			std::cout << "\n\n\n" << "ERROR: Maximum Level of Assets Too Low, increase max_a" << "\n \n \n ";
-		}
+		std::cerr << "\n\n\n" << "ERROR: Maximum Level of Assets Too Low, increase max_a. Terminating Execution." << "\n \n \n ";
+		exit(EXIT_FAILURE);
+		
 	}
 
 	float A = 0;

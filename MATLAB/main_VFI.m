@@ -83,42 +83,42 @@ value_old = value;
 iter_VFI = 0;
 
 while(iter_VFI < max_iter_VFI) 
-
-if(iter_VFI <= 15 || mod(iter_VFI, 15) == 0) 
-
-% Update policy and value functions
-
-f = @(x) p.util((1+r)*p.A + w*exp(p.Y) - x) + p.beta*interpolant_value(x,p.Y);
-
-upper_bound = (1+r).*p.A + w*exp(p.Y);
-
-[policy, value] = golden_section_search(f, p.min_a.*ones(p.dim_a*p.dim_y,1), upper_bound,tol_golden_section);
-
-cont_value = p.global_transition*value;
-
-interpolant_value = griddedInterpolant(reshape(p.A, [p.dim_a, p.dim_y]), reshape(p.Y, [p.dim_a, p.dim_y]), reshape(cont_value, [p.dim_a p.dim_y]), 'linear', 'nearest');
-
-else 
-
-% Howard Improvement, update value function with current policy function
-
-f = @(x) p.util((1+r)*p.A + w*exp(p.Y) - x) + p.beta*interpolant_value(x,p.Y);
- 
-value = f(policy);
-
-cont_value = p.global_transition*value;
-
-interpolant_value = griddedInterpolant(reshape(p.A, [p.dim_a, p.dim_y]), reshape(p.Y, [p.dim_a, p.dim_y]), reshape(cont_value, [p.dim_a p.dim_y]), 'linear', 'nearest');
-
-end
-
-diff_VFI = norm(value - value_old);
-
-value_old = value;
-
-iter_VFI = iter_VFI + 1;
-
-end
+  
+  if(iter_VFI <= 15 || mod(iter_VFI, 15) == 0) 
+  
+  % Update policy and value functions
+  
+    f = @(x) p.util((1+r)*p.A + w*exp(p.Y) - x) + p.beta*interpolant_value(x,p.Y);
+    
+    upper_bound = (1+r).*p.A + w*exp(p.Y);
+    
+    [policy, value] = golden_section_search(f, p.min_a.*ones(p.dim_a*p.dim_y,1), upper_bound,tol_golden_section);
+    
+    cont_value = p.global_transition*value;
+    
+    interpolant_value = griddedInterpolant(reshape(p.A, [p.dim_a, p.dim_y]), reshape(p.Y, [p.dim_a, p.dim_y]), reshape(cont_value, [p.dim_a p.dim_y]), 'linear', 'nearest');
+  
+  else 
+  
+    % Howard Improvement, update value function with current policy function
+    
+    f = @(x) p.util((1+r)*p.A + w*exp(p.Y) - x) + p.beta*interpolant_value(x,p.Y);
+     
+    value = f(policy);
+    
+    cont_value = p.global_transition*value;
+    
+    interpolant_value = griddedInterpolant(reshape(p.A, [p.dim_a, p.dim_y]), reshape(p.Y, [p.dim_a, p.dim_y]), reshape(cont_value, [p.dim_a p.dim_y]), 'linear', 'nearest');
+    
+    end
+    
+    diff_VFI = norm(value - value_old);
+    
+    value_old = value;
+    
+    iter_VFI = iter_VFI + 1;
+  
+  end
 
 end
 

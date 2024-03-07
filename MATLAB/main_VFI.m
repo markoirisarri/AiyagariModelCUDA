@@ -112,11 +112,11 @@ while(iter_VFI < max_iter_VFI)
     
     end
     
-    diff_VFI = norm(value - value_old);
-    
-    value_old = value;
-    
-    iter_VFI = iter_VFI + 1;
+  diff_VFI = norm(value - value_old);
+  
+  value_old = value;
+  
+  iter_VFI = iter_VFI + 1;
   
   end
 

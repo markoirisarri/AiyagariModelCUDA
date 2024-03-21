@@ -33,6 +33,15 @@ exit(1); \
 #include "gpu_functions.cuh"
 #include "model_inputs.cuh"
 
+
+// Helper function to obtain the allocated shared memory for the reduction kernel
+
+ size_t getSMemSize(const int blockSize) {
+
+	return blockSize * sizeof(float);
+
+}
+
 void update_r(parameters p, grids Grids, prices p_prices, void* KernelArgs[]) {
 
 	/*-------------------------------------------------------------------
@@ -203,9 +212,9 @@ void model_solver(parameters p, grids Grids, prices prices, void* KernelArgs[]) 
 
 	// perform reduction on the obtained series for the variables of interest 
 
-	cudaOccupancyMaxPotentialBlockSize(&BLOCKS3, &THREADS3, reduction_kernel, THREADS3*sizeof(float), 0);
+	cudaOccupancyMaxPotentialBlockSizeVariableSMem(&BLOCKS3, &THREADS3, reduction_kernel, getSMemSize, 0);
 	CHECK(cudaDeviceSynchronize());
-
+	
 	// Assets
 	reduction_kernel <<<BLOCKS3,THREADS3,THREADS3*sizeof(float)>>> (Grids.ptr_aux_vector_sums, reduction_start_index, reduction_end_index, Grids.ptr_assets_simulation, Grids.ptr_total_assets);
 	cudaDeviceSynchronize();

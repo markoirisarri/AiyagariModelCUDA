@@ -65,7 +65,7 @@ __global__ void reduction_kernel(float* aux_vector, int burn_in, int size,  floa
 
 		for (unsigned int s = 1; s < blockDim.x; s *= 2) {
 			int index = 2 * s * threadIdx.x;
-			if (index  < blockDim.x && burn_in + int((i - burn_in + 1 ) / (gridDim.x * blockDim.x)) * (gridDim.x * blockDim.x) + blockIdx.x * blockDim.x + index + s < size) {
+			if (index + s  < blockDim.x && burn_in + int((i - burn_in + 1 ) / (gridDim.x * blockDim.x)) * (gridDim.x * blockDim.x) + blockIdx.x * blockDim.x + index + s < size) {
 
 				aux_shared[index] += aux_shared[index + s];
 

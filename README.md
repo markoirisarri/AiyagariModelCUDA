@@ -50,6 +50,11 @@ CUDA Folder:
 
 MATLAB Folder:
 * Main_VFI.m, tauchen_method_1986.m and golden_section_search.m are the files to run the model counterpart in MATLAB
+
+## Acknowledgements 
+
+* I thank Zidong Lin for the help in finding a bug in the execution configuration for the reduction kernel on the RTX 4000 series family. 
+
   
 ## Requirements:
 
